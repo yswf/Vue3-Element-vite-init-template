@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 // 导入axios
 import axios from 'axios';
-import qs from 'querystring'; // 引入qs，axios在post参数时，要通过qs来格式化数据
+import qs from 'qs'; // 引入qs，axios在post参数时，要通过qs来格式化数据
 // 导入NProgress
 import NProgress from 'nprogress';
 import { ElMessage } from 'element-plus';
