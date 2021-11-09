@@ -7,19 +7,20 @@
     <p>{{ userdata.email }}</p>
     <strong>mobile:</strong>
     <p>{{ userdata.mobile }}</p>
+    <el-button @click="logout">退出登录</el-button>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {},
-  computed: {
-    userdata() {
-      console.log(this.$store.state.user.userInfo);
-      return this.$store.state.user.userInfo;
-    },
-  },
-};
+<script lang="ts" >
+import { defineComponent } from '@vue/runtime-core'
+import { useUserInfo } from '@/hooks/login'
+export default defineComponent({
+  setup(){
+    const { getUserInfo,logout } = useUserInfo()
+    const userdata = getUserInfo()
+    return{
+      userdata,
+      logout
+    }
+  }
+})
 </script>

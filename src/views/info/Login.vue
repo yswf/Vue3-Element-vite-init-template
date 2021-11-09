@@ -1,52 +1,58 @@
 <template>
-    <div class="login-main">
-        <div class="login-modal">
-            <h1 class="login-title">后台管理系统</h1>
-            <el-form :model="formData" :rules="rules" ref="ruleForm" status-icon>
-                <el-form-item prop="username">
-                    <el-input v-model="formData.username" prefix-icon="el-icon-user" placeholder="请输入账号"></el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input v-model="formData.password"  placeholder="请输入密码" prefix-icon="el-icon-view" type="password"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" class="login-btn" @click="loginHandler">登录</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+  <div class="login-main">
+    <div class="login-modal">
+      <h1 class="login-title">后台管理系统</h1>
+      <el-form
+        ref="ruleForm"
+        :model="formData"
+        :rules="rules"
+        status-icon
+      >
+        <el-form-item prop="username">
+          <el-input v-model="formData.username" prefix-icon="el-icon-user" placeholder="请输入账号" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            v-model="formData.password"
+            placeholder="请输入密码"
+            prefix-icon="el-icon-view"
+            type="password"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" class="login-btn" @click="loginUser">登录</el-button>
+        </el-form-item>
+      </el-form>
     </div>
+  </div>
 </template>
-<script>
-import { ACTION_TYPE } from '../../store/userInfo/types';
-
-export default {
-  name: 'Login',
-  data() {
+<script lang="ts">
+import { useUserInfo } from '@/hooks/login'
+import { defineComponent, ref } from '@vue/runtime-core'
+export default defineComponent({
+  name:'Login',
+  setup(){
+    const { setUserInfo }=useUserInfo()
+    const formData=ref({
+      username: 'test',
+      password: '123456'
+    })
+    const rules={
+      username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+      password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+    }
+    const loginUser=()=>{
+      setUserInfo(formData.value)
+    }
     return {
-      formData: {
-        username: 'test',
-        password: '123456',
-      },
-      rules: {
-        username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-      },
-    };
-  },
-  methods: {
-    loginHandler() {
-      this.$refs.ruleForm.validate(async (valid) => {
-        if (valid) {
-          this.$store.dispatch(ACTION_TYPE.LOAD_REQUEST, this.formData);
-        } else {
-          return false;
-        }
-      });
-    },
-  },
-};
+      formData,
+      rules,
+      loginUser
+    }
+  }
+})
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
     .login-main{
         background-color: #f8fcff;
         width: 100vw;
