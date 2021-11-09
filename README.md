@@ -8,3 +8,6 @@ yarn serve || yarn dev
 
 # 打包
 yarn build
+
+# 说明
+这里是该模板ts版，虽然和主分支页面一样，但是使用vue3 setup hooks 等新特性，同时使用typescript进行重构
